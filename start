@@ -1,0 +1,15 @@
+alfabet = "abcdefghijklmnopqrstuvwxyz"
+rotorA = alfabet
+rotorB = alfabet
+rotorC = alfabet
+
+print(alfabet.index("o"))
+print(rotorA.index("o"))
+
+def encrypt(letter):
+  idx = alfabet.index(letter)
+  newLetter = rotorA[idx]
+  print(newLetter)
+
+for letter in "woord":
+  encrypt(letter)
