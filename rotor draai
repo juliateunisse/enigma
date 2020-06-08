@@ -1,0 +1,28 @@
+alfabet = "abcdefghijklmnopqrstuvwxyz"
+rotorA = alfabet
+rotorB = alfabet
+rotorC = alfabet
+
+  
+print(alfabet.index("o"))
+print(rotorA.index("o"))
+
+def rotordraai(rotor,aantaldraaien): 
+  rotorEind = rotor[26 - aantaldraaien:26]
+  rotorBegin = rotor[0:26 - aantaldraaien]
+  return rotorEind + rotorBegin 
+
+rotorA = rotordraai(alfabet, 0)
+rotorB = rotordraai(alfabet, 0)
+rotorC = rotordraai(alfabet, 0)
+
+
+def encrypt(letter):
+  idx = alfabet.index(letter)
+  newLetter = rotorA[idx]
+  print(newLetter)
+
+tekst = input("typ een woord\n")
+
+for letter in tekst:
+  encrypt(letter)
