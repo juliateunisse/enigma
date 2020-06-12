@@ -1,0 +1,49 @@
+alfabet = "abcdefghijklmnopqrstuvwxyz"
+rotorA = alfabet
+rotorB = alfabet
+rotorC = alfabet
+
+#gebruiker stelt de rotorstanden in
+a = int(input("Stand rotor 1\n"))
+b = int(input("Stand rotor 2\n"))
+c = int(input("Stand rotor 3\n"))
+
+#gebruiker geeft het woord dat moet worden encrypt
+tekst = input("typ een woord of zin\n")
+tekst = tekst.lower()
+
+#hoe de rotoren draaien
+def rotordraai(rotor,aantaldraaien): 
+  rotorEind = rotor[aantaldraaien:26]
+  rotorBegin = rotor[0:aantaldraaien]
+  return rotorEind + rotorBegin 
+
+#start stand rotoren
+rotorA = rotordraai(alfabet, a)
+rotorB = rotordraai(alfabet, b)
+rotorC = rotordraai(alfabet, c)
+
+def encrypt(woord):
+  #draai rotor A
+
+  #als 26 draaien, draai rotor B
+  aantalDraaien = 0 
+for woord in tekst:
+  aantalDraaien += 1
+  encrypt(woord)
+  if aantalDraaien % 26 == 0:
+    #door naar rotorB
+    
+  #als 26 * 26 draaien, draai rotor C
+  #if aantalDraaien % 26 * 26 == 0: 
+
+  
+    idx = alfabet.index(woord)
+    newWord = rotorA[idx]
+    newWord = rotorB[idx]
+    newWord = rotorC[idx]
+  #letter door rotor B
+
+  #letter door rotorC
+
+  print(newWord)
