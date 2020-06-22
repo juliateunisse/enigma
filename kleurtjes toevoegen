@@ -1,0 +1,101 @@
+alfabet = "abcdefghijklmnopqrstuvwxyz"
+
+class enigma:
+  Rotor_1 = 0
+  Rotor_2 = 0
+  Rotor_3 = 0
+
+  def __init__(self, Rotor_1,Rotor_2,Rotor_3) :
+    self.Rotor_a = Rotor_1
+    self.Rotor_b = Rotor_2
+    self.Rotor_c = Rotor_3
+  
+  #letters worden gehusseld, encrypten
+  def rotordraai(self, aantaldraaien): 
+   aantaldraaien = aantaldraaien % 26
+   veranderd_alfabet = list(alfabet)
+   for i in range(aantaldraaien):
+      veranderd_alfabet.insert(0, veranderd_alfabet[-1])
+      veranderd_alfabet.pop(-1)
+   return veranderd_alfabet
+
+  #encrypten
+  def volgende_letter(self, rotor, char) :
+    veranderd_alfabet = self.rotordraai(rotor)
+    letterIndex = alfabet.index(char)
+    return veranderd_alfabet[letterIndex]
+
+  #decrypten
+  def omgekeerd_rotordraai (self, aantaldraaien):
+    veranderd_alfabet = list(alfabet)
+    for i in range (aantaldraaien):
+        veranderd_alfabet.append (veranderd_alfabet[0])
+        veranderd_alfabet.pop(0)
+    return veranderd_alfabet
+ 
+  #decrypten
+  def vorige_letter(self, rotor, char) :
+    veranderd_alfabet = self.omgekeerd_rotordraai(rotor)
+    letterIndex = alfabet.index(char)
+    return veranderd_alfabet[letterIndex]
+     
+  def rotors_draaien(self, plaats) :
+    self.Rotor_a = self.Rotor_a + 1
+
+    if(plaats % 26 == 0):
+      self.Rotor_b = self.Rotor_b + 1
+
+    if(plaats % (26*26)==0):     
+      self.Rotor_c = self.Rotor_c + 1
+
+  def tekst_input(self, tekst) :
+    tekst = tekst.lower()      
+    encrypte_tekst = []
+    plaats = 0  
+
+
+    for char in list(tekst) :
+      if not char in alfabet :
+        encrypte_tekst.append(char)
+        continue 
+
+ # door de rotoren 
+      encrypte_letter = self.volgende_letter(self.Rotor_a, char)
+
+      encrypte_letter = self.volgende_letter(self.Rotor_b, encrypte_letter)  
+
+      encrypte_letter = self.volgende_letter(self.Rotor_c, encrypte_letter)  
+
+# alfabet omkeren
+      omgekeerd_alfabet = [letter for letter in reversed(alfabet)]
+      
+# via de andere kant door de rotoren
+      encrypte_letter = omgekeerd_alfabet[alfabet.index(encrypte_letter)]
+
+      encrypte_letter = self.vorige_letter(self.Rotor_c, encrypte_letter)
+
+      encrypte_letter = self.vorige_letter(self.Rotor_b, encrypte_letter)
+
+      encrypte_letter = self.vorige_letter(self.Rotor_a, encrypte_letter)  
+
+ 
+      encrypte_tekst.append(encrypte_letter)
+    
+      self.rotors_draaien(plaats)
+      plaats = plaats + 1
+  
+    return str.join("",encrypte_tekst)   
+       
+
+#vragen om rotorstanden aan de gebruiker
+a = int(input("\033[1;32;10m  Stand rotor 1\n")) 
+b = int(input("\033[1;31;10m  Stand rotor 2\n"))
+c = int(input("\033[1;33;10m  Stand rotor 3\n"))
+
+#vragen om input van gebruiker (in kleurtjes :))
+input_tekst = input("\033[1;36;10m Typ een woord of zin:\n")
+
+#printen van de encrypte tekst
+x = enigma(a, b, c)
+encrypt = x.tekst_input(input_tekst)
+print("\033[1;34;10m Encrypte tekst:\n", encrypt) 
